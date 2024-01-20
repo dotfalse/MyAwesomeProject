@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Text from Site</title>
+</head>
+<body>
+
+<button onclick="copyText()">Copy Text</button>
+
+<script>
+    function copyText() {
+        // ターゲットとなるサイトのURL
+        var siteURL = 'https://example.com';
+
+        // XMLHttpRequestを使用してサイトのテキストを取得
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var textToCopy = xhr.responseText;
+
+                // テキストをクリップボードにコピー
+                var textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                alert('Text copied to clipboard');
+            }
+        };
+        xhr.open('GET', siteURL, true);
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>
